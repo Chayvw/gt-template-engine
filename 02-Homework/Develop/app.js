@@ -48,10 +48,39 @@ function employeeQuestions(data) {
                             },])
                         .then(function (managerInfo) {
                             let newManager = new Manager(managerInfo.name, managerInfo.Id, managerInfo.email, managerInfo.officeNumber)
-                            allEmployees.push(newManager)
+                            allEmployees.push(newManager);
                             addUser()
 
                         })
+                        case "Engineer":
+                            return inquirer
+                            .prompt ([{
+                                type: "input",
+                                name: "name",
+                                message: "Team member's name ?",
+                            },
+                            {
+                                type: "input",
+                                name: "Id",
+                                message: "Team member's Id ?",
+                            },
+                            {
+                                type: "input",
+                                name: "email",
+                                message: "Team member's email?",
+                            },
+                            {
+                                type: "input",
+                                name: "github",
+                                message: "What is your GitHub username?",
+                            },])
+                            .then (function (engineerInfo) {
+                                let newEngineer = new Engineer (engineerInfo.name, engineerInfo.Id, engineerInfo.email, engineerInfoInfo.github)
+                                allEmployees.push(newEngineer);
+                                addUser()
+                            })
+
+                            
             }
             employeeQuestions()
         })
