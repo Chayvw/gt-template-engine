@@ -9,7 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-allEmployees = [];
+const allEmployees = [];
 function employeeQuestions(data) {
     return inquirer
         .prompt([
@@ -55,6 +55,23 @@ function employeeQuestions(data) {
             }
             employeeQuestions()
         })
+        function addUser(){
+        inquirer
+        .prompt([{
+            type:"confirm",
+            name:"anotherEmployee",
+            message: "Would you like to add another employee?"
+
+        }])
+        .then(function(add){
+            if (add.anotherEmployee === true){
+                employeeQuestions()
+            } else{
+                console.log("render html")
+                console.log(allEmployees)
+            }
+        })
+    }
 
 }
 
