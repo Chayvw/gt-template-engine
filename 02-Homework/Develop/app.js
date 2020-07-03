@@ -9,7 +9,54 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+allEmployees = [];
+function employeeQuestions(data) {
+    return inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "role",
+                message: "What is your role with the company?",
+                choices: [Manager, Engineer, Intern],
+            },
+        ])
+        .then(function (employee) {
+            switch (employee.role) {
+                case "Manager":
+                    return inquirer
+                        .prompt([
 
+                            {
+                                type: "input",
+                                name: "name",
+                                message: "Team member's name ?",
+                            },
+                            {
+                                type: "input",
+                                name: "Id",
+                                message: "Team member's Id ?",
+                            },
+                            {
+                                type: "input",
+                                name: "email",
+                                message: "Team member's email?",
+                            },
+                            {
+                                type: "input",
+                                name: "officeNumber",
+                                message: "What is your office number ?",
+                            },])
+                        .then(function (managerInfo) {
+                            let newManager = new Manager(managerInfo.name, managerInfo.Id, managerInfo.email, managerInfo.officeNumber)
+                            allEmployees.push(newManager)
+                            addUser()
+
+                        })
+            }
+            employeeQuestions()
+        })
+
+}
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
