@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+// array for the employee's information to come back to
 const allEmployees = [];
 function employeeQuestions() {
     inquirer
@@ -55,6 +56,7 @@ function employeeQuestions() {
 
 
                         })
+                        // added a break so it would not prompt all remaining questions at once.
                     break;
                 case "Engineer":
                     inquirer
@@ -115,8 +117,9 @@ function employeeQuestions() {
 
 
             }
-            // employeeQuestions()
+            
         })
+        // that will have user confirm if they will be adding another employee 
     function addUser() {
         inquirer
             .prompt([{
@@ -134,6 +137,7 @@ function employeeQuestions() {
                 }
             })
     }
+    // fs to render to the output folder and generate a html file with user input 
     fs.writeFileSync(outputPath, render(allEmployees), "utf8");
 
 }
