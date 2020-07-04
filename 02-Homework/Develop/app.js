@@ -10,8 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const allEmployees = [];
-function employeeQuestions(data) {
-    return inquirer
+function employeeQuestions() {
+    inquirer
         .prompt([
             {
                 type: "list",
@@ -21,9 +21,11 @@ function employeeQuestions(data) {
             },
         ])
         .then(function (employee) {
+            console.log(typeof employee.role)
             switch (employee.role) {
+
                 case "Manager":
-                    return inquirer
+                    inquirer
                         .prompt([
 
                             {
@@ -51,58 +53,91 @@ function employeeQuestions(data) {
                             allEmployees.push(newManager);
                             addUser()
 
+
                         })
-                        case "Engineer":
-                            return inquirer
-                            .prompt ([{
-                                type: "input",
-                                name: "name",
-                                message: "Team member's name ?",
-                            },
-                            {
-                                type: "input",
-                                name: "Id",
-                                message: "Team member's Id ?",
-                            },
-                            {
-                                type: "input",
-                                name: "email",
-                                message: "Team member's email?",
-                            },
-                            {
-                                type: "input",
-                                name: "github",
-                                message: "What is your GitHub username?",
-                            },])
-                            .then (function (engineerInfo) {
-                                let newEngineer = new Engineer (engineerInfo.name, engineerInfo.Id, engineerInfo.email, engineerInfoInfo.github)
-                                allEmployees.push(newEngineer);
-                                addUser()
-                            })
+                    break;
+                case "Engineer":
+                    inquirer
+                        .prompt([{
+                            type: "input",
+                            name: "name",
+                            message: "Team member's name ?",
+                        },
+                        {
+                            type: "input",
+                            name: "Id",
+                            message: "Team member's Id ?",
+                        },
+                        {
+                            type: "input",
+                            name: "email",
+                            message: "Team member's email?",
+                        },
+                        {
+                            type: "input",
+                            name: "github",
+                            message: "What is your GitHub username?",
+                        },])
+                        .then(function (engineerInfo) {
+                            let newEngineer = new Engineer(engineerInfo.name, engineerInfo.Id, engineerInfo.email, engineerInfo.github)
+                            allEmployees.push(newEngineer);
+                            addUser();
+                        })
+                    break;
+                case "Intern":
+                    inquirer
+                        .prompt([{
+                            type: "input",
+                            name: "name",
+                            message: "Team member's name ?",
+                        },
+                        {
+                            type: "input",
+                            name: "Id",
+                            message: "Team member's Id ?",
+                        },
+                        {
+                            type: "input",
+                            name: "email",
+                            message: "Team member's email?",
+                        },
+                        {
+                            type: "input",
+                            name: "school",
+                            message: "What school did you attend ?",
+                        },])
+                        .then(function (internInfo) {
+                            let newIntern = new Intern(internInfo.name, internInfo.Id, internInfo.email, internInfo.school);
+                            allEmployees.push(newIntern);
+                            addUser();
+                        })
+                    break;
 
-                            
+
             }
-            employeeQuestions()
+            // employeeQuestions()
         })
-        function addUser(){
+    function addUser() {
         inquirer
-        .prompt([{
-            type:"confirm",
-            name:"anotherEmployee",
-            message: "Would you like to add another employee?"
+            .prompt([{
+                type: "confirm",
+                name: "anotherEmployee",
+                message: "Would you like to add another employee?"
 
-        }])
-        .then(function(add){
-            if (add.anotherEmployee === true){
-                employeeQuestions()
-            } else{
-                console.log("render html")
-                console.log(allEmployees)
-            }
-        })
+            }])
+            .then(function (add) {
+                if (add.anotherEmployee === true) {
+                    employeeQuestions()
+                } else {
+                    console.log("render html")
+                    console.log(allEmployees)
+                }
+            })
     }
+    fs.writeFileSync(outputPath, render(allEmployees), "utf8");
 
 }
+employeeQuestions()
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
